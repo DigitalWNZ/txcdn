@@ -3,11 +3,11 @@ constant: lzdiagtable {
 }
 
 constant: cdnview{
-  value: "`htzx-jp.htzx_asia_cdn.requests_*`"
+  value: "`lxd-project.txcdn.trouble`"
 }
 
 constant: cdntable{
-  value: "`htzx-jp.htzx_asia_cdn.requests_*`"
+  value: "`lxd-project.txcdn.trouble`"
 }
 
 constant:updateview{

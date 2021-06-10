@@ -2,16 +2,20 @@ view: retention_interval {
   derived_table: {
     sql: with flat as (
        select
-        substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3) as metro,
+        --substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3) as metro,
+        substr(jsonPayload.cacheId,1,3) as metro,
         timestamp,
         httpRequest.userAgent,
         httpRequest.remoteIp,
         httpRequest.status,
-        jsonpayload_type_loadbalancerlogentry.statusdetails,
-        jsonpayload_type_loadbalancerlogentry.cacheid,
+        --jsonpayload_type_loadbalancerlogentry.statusdetails,
+        --jsonpayload_type_loadbalancerlogentry.cacheid,
+        jsonPayload.statusDetails as statusdetails,
+        jsonPayload.cacheId as cacheid,
         httpRequest.requestUrl,
         httpRequest.cacheHit,
-        lag(substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3)) over (partition by httpRequest.requestUrl order by timestamp) as prev_metro,
+        --lag(substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3)) over (partition by httpRequest.requestUrl order by timestamp) as prev_metro,
+        lag(substr(jsonPayload.cacheId,1,3)) over (partition by httpRequest.requestUrl order by timestamp) as prev_metro,
         lag(timestamp) over (partition by httpRequest.requestUrl order by timestamp) as prev_timestamp,
         lag(httpRequest.cacheHit) over (partition by httpRequest.requestUrl order by timestamp) as prev_cache_hit
       from ${cdnlog.SQL_TABLE_NAME} clog)

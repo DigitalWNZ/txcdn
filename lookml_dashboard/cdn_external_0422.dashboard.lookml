@@ -5,7 +5,7 @@
   elements:
   - title: Request by Metro
     name: Request by Metro
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_pie
     fields: [cdn_transform.metro, cdn_transform.count]
@@ -68,7 +68,7 @@
     height: 7
   - title: Hit Rate by Metro
     name: Hit Rate by Metro
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_grid
     fields: [cdn_transform.metro, cdn_transform.real_hit_rate_filtered, cdn_transform.expect_hit_rate_filtered,
@@ -132,7 +132,7 @@
     height: 12
   - title: Latency by Metro
     name: Latency by Metro
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_grid
     fields: [cdn_transform.metro, cdn_transform.latency_p50, cdn_transform.latency_p90,
@@ -215,7 +215,7 @@
     height: 9
   - title: Latency by Time
     name: Latency by Time
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_area
     fields: [cdn_transform.latency_p50, cdn_transform.latency_p90, cdn_transform.latency_p95,
@@ -266,7 +266,7 @@
     height: 13
   - title: Hit Rate by Time
     name: Hit Rate by Time
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_area
     fields: [cdn_transform.timekey_min, cdn_transform.real_hit_rate_filtered]
@@ -315,7 +315,7 @@
     height: 10
   - title: Client Heat Map
     name: Client Heat Map
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_map
     fields: [cdn_transform.count_distinct_remote_ip, geo_ip_country_mask.country_iso_code]
@@ -360,7 +360,7 @@
     height: 10
   - title: Request by Status
     name: Request by Status
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_column
     fields: [cdn_transform.timekey_min, cdn_transform.status_tier, cdn_transform.count]
@@ -409,7 +409,7 @@
     height: 9
   - title: Top URL
     name: Top URL
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_bar
     fields: [cdn_transform.request_url, cdn_transform.count]
@@ -461,7 +461,7 @@
     height: 7
   - title: Request by Protocal
     name: Request by Protocal
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_pie
     fields: [cdn_transform.request_protocal, cdn_transform.count]
@@ -511,7 +511,7 @@
     height: 7
   - title: Response Size vs Cache Fill Size
     name: Response Size vs Cache Fill Size
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_column
     fields: [cdn_transform.timekey_min, cdn_transform.sum_non_cache_fill_filtered,
@@ -560,7 +560,7 @@
     height: 10
   - title: Request by Cacheid
     name: Request by Cacheid
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_pie
     fields: [cdn_transform.cacheid, cdn_transform.count]
@@ -610,7 +610,7 @@
     height: 7
   - title: Request by ASN
     name: Request by ASN
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     type: looker_pie
     fields: [cdn_transform.count, geo_ip_isp_mask.asn]
@@ -660,7 +660,7 @@
     height: 7
   - title: Request by Extension
     name: Request by Extension
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform_base
     type: looker_pie
     fields: [cdn_transform.count, cdn_transform.request_extension]
@@ -742,7 +742,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: cdn_transform.timestamp_time
@@ -755,7 +755,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: cdn_transform.metro
@@ -768,7 +768,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: cdn_transform.cacheid
@@ -781,7 +781,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: geo_ip_isp_mask.asn
@@ -794,7 +794,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: cdn_transform.request_url
@@ -807,7 +807,7 @@
     ui_config:
       type: advanced
       display: popover
-    model: zl_asia_0422
+    model: tx_cdn
     explore: cdn_transform
     listens_to_filters: []
     field: cdn_transform.num_of_minutes

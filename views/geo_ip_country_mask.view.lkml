@@ -1,5 +1,5 @@
 view: geo_ip_country_mask {
-  sql_table_name: `opscenter.networktest.GeoIP_Country_Mask`
+  sql_table_name: `allen-first.wtrace_view.GeoIP_Country_Mask`
     ;;
 
   dimension: country_iso_code {

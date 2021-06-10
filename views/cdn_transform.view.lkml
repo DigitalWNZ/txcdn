@@ -1,9 +1,21 @@
 view: cdn_transform {
   derived_table: {
     sql: SELECT
-      substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3) as metro,
-      jsonpayload_type_loadbalancerlogentry.cacheid,
-      jsonpayload_type_loadbalancerlogentry.statusdetails,
+      --substr(jsonpayload_type_loadbalancerlogentry.cacheid,1,3) as metro,
+      --jsonpayload_type_loadbalancerlogentry.cacheid,
+      --jsonpayload_type_loadbalancerlogentry.statusdetails,
+      --timestamp,
+      --httpRequest.requestUrl,
+      --httpRequest.status,
+      --httpRequest.responseSize,
+      --httpRequest.userAgent,
+      --httpRequest.remoteIp,
+      --httpRequest.latency,
+      --httpRequest.cacheHit,
+      --httpRequest.cacheFillBytes
+      substr(jsonPayload.cacheId,1,3) as metro,
+      jsonPayload.cacheId as cacheid,
+      jsonPayload.statusDetails as statusdetails,
       timestamp,
       httpRequest.requestUrl,
       httpRequest.status,
@@ -230,13 +242,13 @@ view: cdn_transform {
     dimension: metro {
       type: string
       sql: ${TABLE}.metro ;;
-      drill_fields: [cacheid,ip_asn.asn]
+      drill_fields: [cacheid,geo_ip_isp_mask.asn]
     }
 
     dimension: cacheid {
       type: string
       sql: ${TABLE}.cacheid ;;
-      drill_fields: [ip_asn.asn]
+      drill_fields: [geo_ip_isp_mask.asn]
     }
 
     dimension: statusdetails {
@@ -310,7 +322,7 @@ view: cdn_transform {
 
     dimension: latency {
       type: number
-      sql: ${TABLE}.latency ;;
+      sql: safe_cast(substr(${TABLE}.latency,0,length(${TABLE}.latency)-1) as float64);;
     }
 
     dimension: cache_hit {

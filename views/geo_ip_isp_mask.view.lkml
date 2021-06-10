@@ -1,5 +1,5 @@
 view: geo_ip_isp_mask {
-  sql_table_name: `opscenter.networktest.GeoIP_ISP_Mask`
+  sql_table_name: `allen-first.wtrace_view.GeoIP_ISP_Mask`
     ;;
 
   dimension: asn {
@@ -43,15 +43,15 @@ view: geo_ip_isp_mask {
     html: isp: {{value}}  asn:{{asn._rendered_value}} cidr:{{network._rendered_value}} ;;
   }
 
-  dimension: isp_yh_1 {
-    type: string
-    sql: replace(${TABLE}.isp,'"','');;
-    drill_fields: [network]
-    link: {
-      label: "Drill to Metro"
-      url: "/dashboards/1052?ISP={{value}}&Time+Time={{_filters['gcp_hop_dive.time_time'] | url_encode}}&Country+Iso+Code={{_filters['geo_ip_country_mask.country_iso_code'] | url_encode}}&Diff+Asn+%28Yes+%2F+No%29={{ _filters['gcp_hop_dive.diff_asn'] | url_encode }}&Metro={{ _filters['gcp_hop_dive.metro'] | url_encode }}&Asn={{ _filters['geo_ip_isp_mask.asn'] | url_encode }}"
-    }
-  }
+  # dimension: isp_yh_1 {
+  #   type: string
+  #   sql: replace(${TABLE}.isp,'"','');;
+  #   drill_fields: [network]
+  #   link: {
+  #     label: "Drill to Metro"
+  #     url: "/dashboards/1052?ISP={{value}}&Time+Time={{_filters['gcp_hop_dive.time_time'] | url_encode}}&Country+Iso+Code={{_filters['geo_ip_country_mask.country_iso_code'] | url_encode}}&Diff+Asn+%28Yes+%2F+No%29={{ _filters['gcp_hop_dive.diff_asn'] | url_encode }}&Metro={{ _filters['gcp_hop_dive.metro'] | url_encode }}&Asn={{ _filters['geo_ip_isp_mask.asn'] | url_encode }}"
+  #   }
+  # }
 
   dimension: network {
     type: string

@@ -26,7 +26,7 @@ view: cdn_transform {
       httpRequest.cacheHit,
       httpRequest.cacheFillBytes
       FROM ${cdnlog.SQL_TABLE_NAME} clog
-      where httpRequest.userAgent not like '%GFE%'
+      where httpRequest.userAgent <>'Cloud-CDN-Google (GFE/2.0)' or httpRequest.userAgent is null
       ;;
   }
 
@@ -39,7 +39,8 @@ view: cdn_transform {
 
   measure: count_filtered {
     type: count
-    filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [status: "0,200,206", user_agent: "-Cloud-CDN-Google (GFE/2.0)" or null"]
+    filters: [status: "0,200,206"]
   }
 
   measure: count_hit {
@@ -49,7 +50,8 @@ view: cdn_transform {
 
   measure: count_hit_filtered {
     type: count
-    filters: [cache_hit:"-NULL",status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [cache_hit:"-NULL",status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [cache_hit:"-NULL",status: "0,200,206"]
   }
 
   measure: real_hit_rate {
@@ -72,7 +74,8 @@ view: cdn_transform {
   measure: count_distinct_url_filtered {
     type: count_distinct
     sql: ${request_url} ;;
-    filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [status: "0,200,206"]
   }
 
   measure: expect_hit_rate {
@@ -91,7 +94,8 @@ view: cdn_transform {
     type: percentile
     percentile: 50
     sql: ${latency} ;;
-    filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    # filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    filters: [cache_hit: "NULL",status: "0,200,206",latency: "<100"]
     value_format_name: decimal_2
   }
 
@@ -99,7 +103,8 @@ view: cdn_transform {
     type: percentile
     percentile: 90
     sql: ${latency} ;;
-    filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    # filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    filters: [cache_hit: "NULL",status: "0,200,206", latency: "<100"]
     value_format_name: decimal_2
   }
 
@@ -107,7 +112,8 @@ view: cdn_transform {
     type: percentile
     percentile: 95
     sql: ${latency} ;;
-    filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    # filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    filters: [cache_hit: "NULL",status: "0,200,206", latency: "<100"]
     value_format_name: decimal_2
   }
 
@@ -115,14 +121,16 @@ view: cdn_transform {
     type: percentile
     percentile: 99
     sql: ${latency} ;;
-    filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    # filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    filters: [cache_hit: "NULL",status: "0,200,206",latency: "<100"]
     value_format_name: decimal_2
   }
 
   measure: latency_median {
     type: median
     sql: ${latency} ;;
-    filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    # filters: [cache_hit: "NULL",status: "0,200,206", user_agent: "-%GFE%",latency: "<100"]
+    filters: [cache_hit: "NULL",status: "0,200,206", latency: "<100"]
     value_format_name: decimal_2
   }
 
@@ -143,7 +151,8 @@ view: cdn_transform {
     type: sum
     sql: ${response_size}/(1024*1024*1024);;
     value_format_name: decimal_2
-    filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [status: "0,200,206"]
   }
 
   measure: sum_resp_size_hit {
@@ -157,7 +166,8 @@ view: cdn_transform {
     type: sum
     sql: ${response_size} /(1024*1024*1024);;
     value_format_name: decimal_2
-    filters: [cache_hit: "-NULL",status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [cache_hit: "-NULL",status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [cache_hit: "-NULL",status: "0,200,206"]
   }
 
   measure: sum_resp_size_miss {
@@ -171,7 +181,8 @@ view: cdn_transform {
     type: sum
     sql: ${response_size} /(1024*1024*1024);;
     value_format_name: decimal_2
-    filters: [cache_hit: "NULL",statusdetails: "response_sent_by_backend",status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [cache_hit: "NULL",statusdetails: "response_sent_by_backend",status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [cache_hit: "NULL",statusdetails: "response_sent_by_backend",status: "0,200,206"]
   }
 
   measure: sum_cache_fill {
@@ -184,7 +195,8 @@ view: cdn_transform {
     type: sum
     sql: ${cache_fill_bytes} /(1024*1024*1024);;
     value_format_name: decimal_2
-    filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [status: "0,200,206"]
   }
 
   measure: sum_non_cache_fill {
@@ -205,7 +217,8 @@ view: cdn_transform {
   measure: count_distinct_remote_ip_filtered {
     type: count_distinct
     sql: ${remote_ip} ;;
-    filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    # filters: [status: "0,200,206", user_agent: "-%GFE%"]
+    filters: [status: "0,200,206"]
   }
 
   dimension: request_protocal {
